@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umfangreicher Zinsrechner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Umfangreicher Zinsrechner</h1>
+            <p>Berechnen Sie Zinsen, Zinseszinsen und mehr</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="simple-interest">Einfache Verzinsung</button>
+                <button class="tab-btn" data-tab="compound-interest">Zinseszins</button>
+                <button class="tab-btn" data-tab="loan-calculator">Kreditrechner</button>
+                <button class="tab-btn" data-tab="savings-calculator">Sparplanrechner</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Einfache Verzinsung -->
+                <div class="tab-pane active" id="simple-interest">
+                    <h2>Einfache Verzinsung</h2>
+                    <div class="input-group">
+                        <label for="simple-principal">Anfangskapital (€):</label>
+                        <input type="number" id="simple-principal" min="0" step="100" value="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="simple-rate">Zinssatz (% pro Jahr):</label>
+                        <input type="number" id="simple-rate" min="0" step="0.1" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="simple-time">Laufzeit (Jahre):</label>
+                        <input type="number" id="simple-time" min="0" step="1" value="1">
+                    </div>
+                    <button class="calculate-btn" id="calculate-simple">Berechnen</button>
+                    
+                    <div class="results" id="simple-results">
+                        <div class="result-item">
+                            <span>Anfangskapital:</span>
+                            <span id="simple-result-principal">€0.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Zinsen:</span>
+                            <span id="simple-result-interest">€0.00</span>
+                        </div>
+                        <div class="result-item highlight">
+                            <span>Endkapital:</span>
+                            <span id="simple-result-total">€0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zinseszins -->
+                <div class="tab-pane" id="compound-interest">
+                    <h2>Zinseszins</h2>
+                    <div class="input-group">
+                        <label for="compound-principal">Anfangskapital (€):</label>
+                        <input type="number" id="compound-principal" min="0" step="100" value="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="compound-rate">Zinssatz (% pro Jahr):</label>
+                        <input type="number" id="compound-rate" min="0" step="0.1" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="compound-time">Laufzeit (Jahre):</label>
+                        <input type="number" id="compound-time" min="0" step="1" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="compound-frequency">Zinsperiode:</label>
+                        <select id="compound-frequency">
+                            <option value="1">Jährlich</option>
+                            <option value="2">Halbjährlich</option>
+                            <option value="4">Vierteljährlich</option>
+                            <option value="12">Monatlich</option>
+                            <option value="365">Täglich</option>
+                        </select>
+                    </div>
+                    <button class="calculate-btn" id="calculate-compound">Berechnen</button>
+                    
+                    <div class="results" id="compound-results">
+                        <div class="result-item">
+                            <span>Anfangskapital:</span>
+                            <span id="compound-result-principal">€0.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Zinsen:</span>
+                            <span id="compound-result-interest">€0.00</span>
+                        </div>
+                        <div class="result-item highlight">
+                            <span>Endkapital:</span>
+                            <span id="compound-result-total">€0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="compound-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Kreditrechner -->
+                <div class="tab-pane" id="loan-calculator">
+                    <h2>Kreditrechner</h2>
+                    <div class="input-group">
+                        <label for="loan-amount">Kreditbetrag (€):</label>
+                        <input type="number" id="loan-amount" min="0" step="1000" value="10000">
+                    </div>
+                    <div class="input-group">
+                        <label for="loan-rate">Zinssatz (% pro Jahr):</label>
+                        <input type="number" id="loan-rate" min="0" step="0.1" value="3.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="loan-term">Laufzeit (Jahre):</label>
+                        <input type="number" id="loan-term" min="0" step="1" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="payment-frequency">Zahlungsintervall:</label>
+                        <select id="payment-frequency">
+                            <option value="12">Monatlich</option>
+                            <option value="4">Vierteljährlich</option>
+                            <option value="2">Halbjährlich</option>
+                            <option value="1">Jährlich</option>
+                        </select>
+                    </div>
+                    <button class="calculate-btn" id="calculate-loan">Berechnen</button>
+                    
+                    <div class="results" id="loan-results">
+                        <div class="result-item">
+                            <span>Rate:</span>
+                            <span id="loan-result-payment">€0.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Gesamtzinsen:</span>
+                            <span id="loan-result-interest">€0.00</span>
+                        </div>
+                        <div class="result-item highlight">
+                            <span>Gesamtrückzahlung:</span>
+                            <span id="loan-result-total">€0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="loan-chart"></canvas>
+                    </div>
+                    
+                    <div class="amortization-table-container">
+                        <h3>Tilgungsplan</h3>
+                        <div class="table-wrapper">
+                            <table id="amortization-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nr.</th>
+                                        <th>Zahlung</th>
+                                        <th>Zinsen</th>
+                                        <th>Tilgung</th>
+                                        <th>Restschuld</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Wird durch JavaScript gefüllt -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sparplanrechner -->
+                <div class="tab-pane" id="savings-calculator">
+                    <h2>Sparplanrechner</h2>
+                    <div class="input-group">
+                        <label for="savings-initial">Anfangskapital (€):</label>
+                        <input type="number" id="savings-initial" min="0" step="100" value="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="savings-contribution">Regelmäßige Einzahlung (€):</label>
+                        <input type="number" id="savings-contribution" min="0" step="10" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="savings-frequency">Einzahlungsintervall:</label>
+                        <select id="savings-frequency">
+                            <option value="12">Monatlich</option>
+                            <option value="4">Vierteljährlich</option>
+                            <option value="2">Halbjährlich</option>
+                            <option value="1">Jährlich</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="savings-rate">Zinssatz (% pro Jahr):</label>
+                        <input type="number" id="savings-rate" min="0" step="0.1" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label for="savings-time">Laufzeit (Jahre):</label>
+                        <input type="number" id="savings-time" min="0" step="1" value="10">
+                    </div>
+                    <button class="calculate-btn" id="calculate-savings">Berechnen</button>
+                    
+                    <div class="results" id="savings-results">
+                        <div class="result-item">
+                            <span>Eingezahlter Betrag:</span>
+                            <span id="savings-result-contributions">€0.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Zinsen:</span>
+                            <span id="savings-result-interest">€0.00</span>
+                        </div>
+                        <div class="result-item highlight">
+                            <span>Endkapital:</span>
+                            <span id="savings-result-total">€0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="savings-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Über Zinsberechnungen</h2>
+            <div class="info-item">
+                <h3><i class="fas fa-info-circle"></i> Einfache Verzinsung</h3>
+                <p>Bei der einfachen Verzinsung werden Zinsen nur auf das ursprüngliche Kapital berechnet. Die Formel lautet: Zinsen = Kapital × Zinssatz × Zeit</p>
+            </div>
+            <div class="info-item">
+                <h3><i class="fas fa-chart-line"></i> Zinseszins</h3>
+                <p>Beim Zinseszins werden auch Zinsen auf bereits erhaltene Zinsen berechnet. Die Formel lautet: Endkapital = Kapital × (1 + Zinssatz/n)^(n×t), wobei n die Anzahl der Zinsperioden pro Jahr und t die Zeit in Jahren ist.</p>
+            </div>
+            <div class="info-item">
+                <h3><i class="fas fa-hand-holding-usd"></i> Kredite</h3>
+                <p>Bei Krediten wird die regelmäßige Rate so berechnet, dass am Ende der Laufzeit der Kredit vollständig getilgt ist. Die Rate enthält sowohl Zins- als auch Tilgungsanteile.</p>
+            </div>
+            <div class="info-item">
+                <h3><i class="fas fa-piggy-bank"></i> Sparpläne</h3>
+                <p>Bei Sparplänen werden regelmäßig Beträge eingezahlt, die zusammen mit dem Anfangskapital verzinst werden. Dies führt durch den Zinseszinseffekt zu einem exponentiellen Wachstum.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Umfangreicher Zinsrechner | Alle Berechnungen sind Schätzungen und dienen nur zu Informationszwecken.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
